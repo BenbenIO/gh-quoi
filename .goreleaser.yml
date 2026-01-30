@@ -1,0 +1,96 @@
+---
+version: 2
+
+before:
+  hooks:
+    - go mod tidy
+    - go mod download
+
+builds:
+  - id: gh-quoi
+    main: ./cmd/gh-quoi
+    binary: gh-quoi
+    env:
+      - CGO_ENABLED=0
+    goos:
+      - linux
+      - darwin
+    goarch:
+      - amd64
+      - arm64
+      - arm
+    goarm:
+      - "7"
+    ldflags:
+      - -s -w
+      - -X github.com/BenbenIO/gh-quoi/internal/version.Version={{.Version}}
+      - -X github.com/BenbenIO/gh-quoi/internal/version.Commit={{.Commit}}
+      - -X github.com/BenbenIO/gh-quoi/internal/version.Date={{.Date}}
+
+archives:
+  - id: gh-quoi
+    format: tar.gz
+    name_template: >-
+      {{ .ProjectName }}_
+      {{- .Version }}_
+      {{- title .Os }}_
+      {{- if eq .Arch "amd64" }}x86_64
+      {{- else if eq .Arch "386" }}i386
+      {{- else }}{{ .Arch }}{{ end }}
+      {{- if .Arm }}v{{ .Arm }}{{ end }}
+    format_overrides:
+      - goos: windows
+        format: zip
+    files:
+      - LICENSE
+      - README.md
+
+checksum:
+  name_template: "checksums.txt"
+  algorithm: sha256
+
+snapshot:
+  version_template: "{{ incpatch .Version }}-next"
+
+changelog:
+  sort: asc
+  use: github
+  filters:
+    exclude:
+      - "^docs:"
+      - "^test:"
+      - "^chore:"
+      - "^ci:"
+      - Merge pull request
+      - Merge branch
+  groups:
+    - title: Features
+      regexp: '^.*?feat(\([[:word:]]+\))??!?:.+$'
+      order: 0
+    - title: Bug Fixes
+      regexp: '^.*?fix(\([[:word:]]+\))??!?:.+$'
+      order: 1
+    - title: Others
+      order: 999
+
+release:
+  github:
+    owner: BenbenIO
+    name: gh-quoi
+  draft: false
+  prerelease: auto
+  mode: replace
+  header: |
+    ## 🐸 gh-quoi {{ .Tag }} 🐸
+
+    **Full Changelog**: https://github.com/BenbenIO/gh-quoi/compare/{{ .PreviousTag }}...{{ .Tag }}
+  footer: |
+    ## Installation
+
+    ### Binary Downloads
+    Download the appropriate binary for your OS from the assets below.
+
+    ### Via Go Install
+    ```bash
+    go install github.com/BenbenIO/gh-quoi/cmd/gh-quoi@{{ .Tag }}
+    ```
