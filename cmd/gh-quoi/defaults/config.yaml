@@ -1,0 +1,13 @@
+---
+since_day_ago: 7
+
+filters:
+  - name: "Direct involvement"
+    reasons:
+      - assigned
+      - mention
+      - subscribed
+
+  - name: "Platform only PR"
+    types: ["PullRequest"]
+    title_regex: "(?i)^[[]platform[]].*"
