@@ -21,6 +21,31 @@ with custom filtering to show only what you actually care about.
 
 - Go 1.24 or later (if building from source)
 - A GitHub Personal Access Token with `notifications` scope
+- :turtle: On `wls`, please install [wlsu](https://github.com/WhitewaterFoundry/wslu-documentation/blob/master/install.md) to open the browser from WSL:
+
+  ```shell
+  sudo apt install wslu
+  ```
+
+### Quick Install (Linux/macOS)
+
+```bash
+curl -sSL https://raw.githubusercontent.com/BenbenIO/gh-quoi/main/install.sh | sh
+```
+
+Or download and run the script manually:
+
+```bash
+wget https://raw.githubusercontent.com/BenbenIO/gh-quoi/main/install.sh
+chmod +x install.sh
+./install.sh
+```
+
+The script will:
+
+- Detect your OS and architecture
+- Download the latest release
+- Install to `/usr/local/bin` (customizable via `INSTALL_DIR` env var)
 
 ### Binary Releases
 
