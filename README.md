@@ -233,8 +233,8 @@ go test ./...
 ### Linting and formatting
 
 ```bash
-pre-commit install --config .pre-commit-config.yaml
-pre-commit run --all-files
+prek install --config .pre-commit-config.yaml
+prek run --all-files
 ```
 
 ### Releasing
