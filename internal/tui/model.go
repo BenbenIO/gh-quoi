@@ -58,11 +58,13 @@ func (m *Model) setRows(notifications []model.Notification) {
 		}
 	}
 
+	// TODO: Consider making column widths dynamic based on
+	// terminal size or content length.
 	columns := []table.Column{
 		{Title: " ", Width: 1},
 		{Title: "Title", Width: 45},
 		{Title: "Reason", Width: 16},
-		{Title: "Repo", Width: 25},
+		{Title: "Repo", Width: 30},
 		{Title: "Updated", Width: 15},
 	}
 
