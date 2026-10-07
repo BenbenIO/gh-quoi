@@ -40,7 +40,9 @@ jobs:
           python-version: "3.x"
 
       - name: Run pre-commit
-        uses: pre-commit/action@v3.0.1
+        uses: j178/prek-action@v3.0.0
+        with:
+          token: ${{ github.token }}
 
       - name: Test
         run: go test -coverprofile=coverage.out -covermode=atomic ./...
